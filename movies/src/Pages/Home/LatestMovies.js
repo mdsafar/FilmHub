@@ -16,7 +16,7 @@ const LatestMovies = () => {
 
 
   return (
-    <div style={{ padding: '0  8px' }}>
+    <div className='latest' >
       <Typography variant='h2' sx={{ color: 'white', fontWeight: 600, mt: 3, mb: 1, ml: 2 }} fontSize={26}>
         Latest Movies
       </Typography>

@@ -126,6 +126,10 @@
 
 
 @media (max-width: 540px) {
+    .movies_container {
+        padding: 10px 4px;
+    }
+
     .movies_section {
         padding-top: 4rem;
     }
@@ -155,8 +159,8 @@
     .filter_btn {
         font-size: 12px !important;
     }
-    
-    .ant-picker-dropdown{
+
+    .ant-picker-dropdown {
         inset: 285px auto auto 58px !important;
     }
 

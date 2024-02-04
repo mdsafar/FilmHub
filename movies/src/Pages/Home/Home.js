@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Typography } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 import { Spinner } from 'react-bootstrap'
 import './Home.css'
 import { useNavigate } from 'react-router-dom'
@@ -97,7 +97,7 @@ const Home = () => {
             </div>
           </div>
           <div className='trending'>
-            <Typography variant='h2' sx={{ color: 'white', fontWeight: 600, mb: 2, ml: 1 }} fontSize={30}>
+            <Typography variant='h2' sx={{ color: 'white', fontWeight: 600, mb: 2, }} fontSize={26}>
               Trending
             </Typography>
             <div className='trending_container'>
@@ -126,6 +126,7 @@ const Home = () => {
             </div>
           </div>
           <LatestMovies />
+          <Divider sx={{backgroundColor:'grey'}}/>
           <LatestTvShows />
         </div>
       </>

@@ -1,32 +1,32 @@
-.trending_banner{
+.trending_banner {
     height: 60vh;
     width: 100%;
     background-size: cover;
     background-position: 50% 25%;
 }
 
-.trending_banner > div{
+.trending_banner>div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
 }
 
-.trending_banner > div > h1{
+.trending_banner>div>h1 {
     font-weight: 600;
 }
 
-.trending{
+.trending {
     padding: 1.5rem 1% 0;
 }
 
-.trending_container{ 
+.trending_container {
     display: flex;
     overflow: scroll;
     gap: 16px;
 }
 
-.movie_trending_banner{
+.movie_trending_banner {
     padding: 0 40px;
 }
 
@@ -34,36 +34,40 @@
     display: none;
 }
 
-.trending_card{
+.trending_card {
     cursor: pointer;
 }
 
-.trending_overview{
+.trending_overview {
     display: table;
     table-layout: fixed;
-    width: 100%; 
+    width: 100%;
     max-width: 60%;
     height: 56px;
 }
 
-.trending_overview>p{
+.trending_overview>p {
     font-size: 15px;
 }
 
 
-.trending_img{
+.trending_img {
     min-width: 250px;
 }
 
-.trending_img > img{
+.trending_img>img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.trending_text{
+.trending_text {
     font-size: 16px;
     margin-bottom: 4px;
+}
+
+.latest {
+    padding: 0 8px;
 }
 
 @media screen and (max-width: 830px) {
@@ -73,33 +77,45 @@
 }
 
 @media (max-width: 540px) {
-    .trending{
-        padding: 1.5rem 4% 0;
+    .trending_banner {
+        height: 30vh;
     }
 
-    .trending_img{
-        min-width: 220px;
-    }    
+    .trending {
+        padding: 1.5rem 0 0 2%;
+    }
 
-    .trending_overview{
+    .trending_img {
+        min-width: 220px;
+    }
+
+    .trending_overview {
         max-width: fit-content;
         font-size: 11px;
     }
 
-    .movie_trending_banner{
+    .movie_trending_banner {
         padding: 0 8px;
     }
 
-    .trending_media_type{
+    .trending_media_type {
         font-size: 16px !important;
     }
 
-    .title{
+    .title {
         font-size: 26px;
     }
 
-    .trending_details_btn{
+    .trending_details_btn {
         font-size: 12px !important;
+    }
+
+    .latest {
+        padding: 0;
+    }
+
+    .css-iaqlg2-MuiTypography-root {
+        margin-left: 10px !important;
     }
 
 }
