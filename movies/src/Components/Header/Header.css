@@ -1,0 +1,46 @@
+.search_result_container {
+    top: 65px;
+    right: 20px;
+    width: 310px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(50px);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.search_result_container>div {
+    border-bottom: 1px solid gray;
+}
+
+.search_result_container>div:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.MuiInputBase-input:focus {
+    width: 28ch !important;
+}
+
+.example {
+    margin: 20px 0;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.example>div>span i {
+    background-color: white !important;
+}
+
+@media (max-width: 540px) {
+    .MuiInputBase-input:focus {
+        width: auto !important;
+    }
+
+    .search_result_container {
+        top: 56px;
+        width: 100%;
+        right: auto;
+    }
+}

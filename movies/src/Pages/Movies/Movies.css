@@ -1,0 +1,199 @@
+.movies_container {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movies_card {
+    cursor: pointer;
+    width: 7.3333%;
+    margin: 0 .5% 20px;
+}
+
+.movies_img {
+    width: 100%;
+}
+
+.movies_img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.movies_detail {
+    margin-top: 10px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movies_text {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.movies_date {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.pagination>ul>li button {
+    color: white;
+    border: 1px solid white;
+    background-color: darkslategrey;
+}
+
+.pagination>ul>li div {
+    color: white;
+}
+
+.filter_option {
+    background-color: rgba(255, 255, 255, .1);
+    border-radius: 12px;
+    padding: 25px 35px;
+}
+
+.filter_select>div {
+    background-color: transparent !important;
+    border: none !important;
+    color: white !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+.filter_select_container {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: fit-content;
+    border-radius: 6px;
+}
+
+.ant-select-single.ant-select-open .ant-select-selection-item {
+    color: white;
+}
+
+
+.language_filter {
+    width: 110px !important;
+}
+
+.genres_btn {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    border: 1px solid rgba(200, 200, 210, 0.5) !important;
+}
+
+.genres_btn.Mui-selected {
+    color: white !important;
+    border-color: white !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.date_picker {
+    background-color: transparent !important;
+    border: none;
+    box-shadow: none;
+    color: white;
+    margin-left: 10px;
+    padding: 4px 0;
+}
+
+.date_picker:focus-within {
+    box-shadow: none;
+}
+
+.date_picker span {
+    display: none;
+}
+
+.date_picker input {
+    text-align: center;
+}
+
+.date_picker input::placeholder {
+    color: white !important;
+}
+
+
+
+@media (max-width: 540px) {
+    .movies_section {
+        padding-top: 4rem;
+    }
+
+    .filter_date_option {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+
+    .genres_btn {
+        font-size: 10px !important;
+    }
+
+    .genre_btn_group {
+        gap: 8px !important;
+    }
+
+    .filter_option {
+        padding: 25px 20px 15px;
+    }
+
+    .filter_btn_div {
+        margin-top: 20px !important;
+        margin-right: auto !important;
+    }
+
+    .filter_btn {
+        font-size: 12px !important;
+    }
+    
+    .ant-picker-dropdown{
+        inset: 285px auto auto 58px !important;
+    }
+
+}
+
+
+
+@media screen and (max-width: 2200px) {
+    .movies_card {
+        width: 15.66% !important;
+    }
+}
+
+
+@media screen and (max-width: 1599px) {
+    .movies_card {
+        width: 15.66% !important;
+    }
+}
+
+
+@media screen and (max-width: 998px) {
+    .movies_card {
+        width: 24% !important;
+        margin-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 759px) {
+    .movies_card {
+        width: 32.33% !important;
+    }
+}
+
+
+@media screen and (max-width: 639px) {
+    .movies_card {
+        width: 49% !important;
+    }
+}
