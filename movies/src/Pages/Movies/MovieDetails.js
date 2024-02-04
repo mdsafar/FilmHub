@@ -140,7 +140,7 @@ const MovieDetails = () => {
                         <Typography variant='h2' sx={{ color: 'white', mb: 2, }} fontSize={20}>
                             Top Billed Cast
                         </Typography>
-                        <div className='trending_container  me-3 mb-2'>
+                        <div className='trending_container cast_container  me-3 mb-2'>
                             {credits?.cast?.map((data) => {
                                 return <MovieCast key={data.cast_id} data={data} />
                             })}
@@ -176,7 +176,7 @@ const MovieDetails = () => {
                                         <h2 className='movies_text'>
                                             {data.title?.length > 16 ? `${data.title?.slice(0, 14)}...` : data.title}
                                         </h2>
-                                        <p className='movies_date'>{data.release_date.slice(0, 4)}</p>
+                                        <p className='movies_date'>{data.release_date?.slice(0, 4)}</p>
                                     </div>
 
                                 </div>

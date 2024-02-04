@@ -35,7 +35,7 @@ const LatestTvShows = () => {
                             <h2 className='movies_text'>
                                 {data.original_name?.length > 14 ? `${data.original_name?.slice(0, 14)}...` : data.original_name}
                             </h2>
-                            <p className='movies_date'>{data.first_air_date.slice(0, 4)}</p>
+                            <p className='movies_date'>{data.first_air_date?.slice(0, 4)}</p>
                         </div>
 
                     </div>

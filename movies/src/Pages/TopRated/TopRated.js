@@ -83,7 +83,7 @@ const TopRated = () => {
                                         <h2 className='movies_text'>
                                             {data.original_title?.length > 14 ? `${data.original_title?.slice(0, 14)}...` : data.original_title}
                                         </h2>
-                                        <p className='movies_date'>{data.release_date.slice(0, 4)}</p>
+                                        <p className='movies_date'>{data.release_date?.slice(0, 4)}</p>
                                     </div>
 
                                 </div>
@@ -98,7 +98,7 @@ const TopRated = () => {
                                         <h2 className='movies_text'>
                                             {data.name?.length > 14 ? `${data.name?.slice(0, 14)}...` : data.name}
                                         </h2>
-                                        <p className='movies_date'>{data.first_air_date.slice(0, 4)}</p>
+                                        <p className='movies_date'>{data.first_air_date?.slice(0, 4)}</p>
                                     </div>
 
                                 </div>

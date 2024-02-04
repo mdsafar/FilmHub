@@ -34,7 +34,7 @@ const LatestMovies = () => {
               <h2 className='movies_text'>
                 {data.title?.length > 16 ? `${data.title?.slice(0, 14)}...` : data.title}
               </h2>
-              <p className='movies_date'>{data.release_date.slice(0, 4)}</p>
+              <p className='movies_date'>{data.release_date?.slice(0, 4)}</p>
             </div>
 
           </div>

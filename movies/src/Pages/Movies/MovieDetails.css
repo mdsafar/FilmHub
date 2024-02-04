@@ -73,7 +73,7 @@
     font-size: 15px;
 }
 
-.trailer_player{
+.trailer_player {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -113,7 +113,7 @@
 
     .movie_cast_detail {
         flex-direction: column-reverse;
-        padding-bottom: 10px !important;
+        padding: 24px 10px 10px !important;
     }
 
     .movie_cast_detail>div {
@@ -130,39 +130,54 @@
         min-width: calc(((100vw/2.222222) - 40px)/1) !important;
         min-height: calc((100vw/2.222222) - 40px);
     }
-    .media_section{
+
+    .media_section {
         padding: 12px 10px !important;
+        margin-top: 6px;
     }
-    .trailer_player{
+
+    .trailer_player {
         width: 95%;
         height: 40%;
     }
 
-    .media_videos > div{
-      min-width: 360px !important;
-      width: 360px !important;
-      height: 220px !important;
-    }
-    .media_back_drops > div{
+    .media_videos>div {
         min-width: 360px !important;
         width: 360px !important;
         height: 220px !important;
     }
-    .media_posters > div{
+
+    .media_back_drops>div {
+        min-width: 360px !important;
+        width: 360px !important;
+        height: 220px !important;
+    }
+
+    .media_posters>div {
         min-width: 160px !important;
         width: 160px !important;
     }
 
 
-    .media_tabs{
+    .media_tabs {
         font-size: 12px !important;
     }
 
-    .css-kvxy0z-MuiTypography-root , .css-kh36vc-MuiTypography-root {
+    .css-kvxy0z-MuiTypography-root {
+        margin-left: 0 !important;
+    }
+
+    .css-kvxy0z-MuiTypography-root,
+    .css-kh36vc-MuiTypography-root {
         font-size: 22px !important;
     }
+
     .css-zjud86-MuiTypography-root {
         font-size: 18px !important;
         margin-left: 12px !important;
+    }
+
+    .cast_container {
+        margin: 0 !important;
     }
 }

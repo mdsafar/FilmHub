@@ -116,9 +116,9 @@ const Home = () => {
                     </h2>
                     <p className='movies_date'>{
                       data.release_date ? (
-                        data.release_date.slice(0, 4)
+                        data.release_date?.slice(0, 4)
                       ) : (
-                        data.first_air_date.slice(0, 4)
+                        data.first_air_date?.slice(0, 4)
                       )}</p>
                   </div>
                 </div>

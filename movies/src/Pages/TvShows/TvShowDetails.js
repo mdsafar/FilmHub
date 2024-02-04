@@ -136,7 +136,7 @@ const TvShowDetails = () => {
                         <Typography variant='h2' sx={{ color: 'white', mb: 2, }} fontSize={22}>
                             Top Billed Cast
                         </Typography>
-                        <div className='trending_container  me-3 mb-2'>
+                        <div className='trending_container cast_container me-3 mb-2'>
                             {credits?.cast?.map((data) => {
                                 return <MovieCast key={data.id} data={data} />
                             })}
@@ -172,7 +172,7 @@ const TvShowDetails = () => {
                                         <h2 className='movies_text'>
                                             {data.name?.length > 16 ? `${data.name?.slice(0, 14)}...` : data.name}
                                         </h2>
-                                        <p className='movies_date'>{data.first_air_date.slice(0, 4)}</p>
+                                        <p className='movies_date'>{data.first_air_date?.slice(0, 4)}</p>
                                     </div>
 
                                 </div>
