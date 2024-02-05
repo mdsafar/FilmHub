@@ -9,6 +9,7 @@ import TopRated from './Pages/TopRated/TopRated';
 import MovieDetails from './Pages/Movies/MovieDetails';
 import TvShowDetails from './Pages/TvShows/TvShowDetails';
 import SearchResults from './Pages/Search/SearchResults';
+import NotFound from './Pages/NotFound/NotFound';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path='/tv/:id' element={<TvShowDetails/>}/>
         <Route path='/top-rated' element={<TopRated/>}/>
         <Route path="/search" element={<SearchResults />} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
   </>

@@ -115,3 +115,9 @@
     }
 
 }
+
+@media screen and (max-width: 380px) {
+    .trending_banner {
+        height: 46vh;
+    }
+}
