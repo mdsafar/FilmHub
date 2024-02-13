@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MovieCast = ({data}) => {
+const Cast = ({data}) => {
     return (
         <div key={data.id} className='trending_card'>
             <div style={{ minWidth: 160, width: 160 }}>
@@ -22,4 +22,4 @@ const MovieCast = ({data}) => {
     )
 }
 
-export default MovieCast
+export default Cast

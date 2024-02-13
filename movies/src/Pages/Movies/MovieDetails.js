@@ -5,10 +5,10 @@ import { Button, Divider, Modal, Typography } from '@mui/material'
 import { Image, Progress } from 'antd'
 import { FaPlay } from "react-icons/fa";
 import { Spinner } from 'react-bootstrap'
-import MovieCast from './MovieCast'
-import MovieMedia from './MovieMedia'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMovieCredits, getMovieDetails, getMovieImages, getMovieVideos, getSimilarMovies } from '../../actions/movieAction'
+import Media from '../../Components/Media'
+import Cast from '../../Components/Cast'
 
 
 
@@ -21,7 +21,7 @@ const conicColors = {
 
 const MovieDetails = () => {
     const dispatch = useDispatch()
-    const { movie, videos, similarMovies, loading, credits } = useSelector((state) => state.movieDetails)
+    const { movie, videos, similarMovies, loading, credits,images } = useSelector((state) => state.movieDetails)
     const navigate = useNavigate()
     const { id } = useParams();
 
@@ -142,7 +142,7 @@ const MovieDetails = () => {
                         </Typography>
                         <div className='trending_container cast_container  me-3 mb-2'>
                             {credits?.cast?.map((data) => {
-                                return <MovieCast key={data.cast_id} data={data} />
+                                return <Cast key={data.cast_id} data={data} />
                             })}
                         </div>
                     </div>
@@ -154,7 +154,7 @@ const MovieDetails = () => {
                     </div>
                 </div>
                 <div className='media_section p-4 pb-2'>
-                    <MovieMedia />
+                   <Media videos={videos} images={images}/>
                 </div>
                 <Divider sx={{ backgroundColor: 'grey' }} />
                 {similarMovies?.results?.length !== 0 &&

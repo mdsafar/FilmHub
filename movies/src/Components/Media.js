@@ -5,18 +5,17 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Box, Typography } from '@mui/material'
 import { Image } from 'antd'
-import { useSelector } from 'react-redux';
 
 
 
-const TvShowMedia = () => {
-    const { videos, images } = useSelector((state) => state.tvShowDetails)
-    const [value, setValue] = useState('1');
 
+const Media = ({videos,images}) => {
+    const [value, setValue] = useState('1')
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
 
     return <>
@@ -72,4 +71,4 @@ const TvShowMedia = () => {
     </>
 }
 
-export default TvShowMedia
+export default Media

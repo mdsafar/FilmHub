@@ -4,10 +4,10 @@ import { Button, Divider, Modal, Typography } from '@mui/material'
 import { Image, Progress } from 'antd'
 import { FaPlay } from "react-icons/fa";
 import { Spinner } from 'react-bootstrap'
-import MovieCast from '../Movies/MovieCast'
-import TvShowMedia from './TvShowMedia'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRecommendedTvShows, getTvShowCredits, getTvShowDetails, getTvShowImages, getTvShowVideos } from '../../actions/tvShowAction'
+import Media from '../../Components/Media';
+import Cast from '../../Components/Cast';
 
 
 
@@ -19,7 +19,7 @@ const conicColors = {
 
 const TvShowDetails = () => {
     const dispatch = useDispatch()
-    const { tvShow, videos, loading, credits, recommendedTvShows } = useSelector((state) => state.tvShowDetails)
+    const { tvShow, videos, loading, credits, recommendedTvShows,images } = useSelector((state) => state.tvShowDetails)
     const navigate = useNavigate()
     const { id } = useParams();
 
@@ -138,7 +138,7 @@ const TvShowDetails = () => {
                         </Typography>
                         <div className='trending_container cast_container me-3 mb-2'>
                             {credits?.cast?.map((data) => {
-                                return <MovieCast key={data.id} data={data} />
+                                return <Cast key={data.id} data={data} />
                             })}
                         </div>
                     </div>
@@ -150,7 +150,7 @@ const TvShowDetails = () => {
                     </div>
                 </div>
                 <div className='media_section p-4 pb-2'>
-                    <TvShowMedia />
+                    <Media videos={videos} images={images} />
                 </div>
                 <Divider sx={{ backgroundColor: 'grey' }} />
                 {recommendedTvShows?.results?.length !== 0 &&
