@@ -25,9 +25,9 @@ const Home = () => {
   useEffect(() => {
     setBanner(data?.results[0])
     const timeOut = setInterval(() => {
-      if (data.results && data.results.length !== 0) {
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        setBanner(data.results[randomIndex]);
+      if (data?.results && data?.results.length !== 0) {
+        const randomIndex = Math.floor(Math.random() * data?.results.length);
+        setBanner(data?.results[randomIndex]);
       }
     }, 5000)
 
