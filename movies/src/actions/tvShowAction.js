@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_LATEST_TVSHOWS, GET_TVSHOWS_FAIL, GET_TVSHOWS_GENRES, GET_TVSHOWS_REQUEST, GET_TVSHOWS_SUCCESS, GET_TVSHOW_CREDITS, GET_TVSHOW_IMAGES, GET_TVSHOW_RECOMMENDATIONS, GET_TVSHOW_VIDEOS, TOP_RATED_TVSHOWS_FAIL, TOP_RATED_TVSHOWS_REQUEST, TOP_RATED_TVSHOWS_SUCCESS, TVSHOW_DETAILS_FAIL, TVSHOW_DETAILS_REQUEST, TVSHOW_DETAILS_SUCCESS} from "../constants/tvShowConstants";
+import { GET_LATEST_TVSHOWS, GET_TVSHOWS_FAIL, GET_TVSHOWS_GENRES, GET_TVSHOWS_REQUEST, GET_TVSHOWS_SUCCESS, GET_TVSHOW_CREDITS, GET_TVSHOW_IMAGES, GET_TVSHOW_RECOMMENDATIONS, GET_TVSHOW_VIDEOS, TOP_RATED_TVSHOWS_FAIL, TOP_RATED_TVSHOWS_REQUEST, TOP_RATED_TVSHOWS_SUCCESS, TVSHOW_DETAILS_FAIL, TVSHOW_DETAILS_REQUEST, TVSHOW_DETAILS_SUCCESS } from "../constants/tvShowConstants";
 
 
 const url = 'https://api.themoviedb.org'
@@ -13,17 +13,18 @@ const config = {
 export const getLatestTvShows = () => async (dispatch) => {
     try {
 
-         await axios.get(`${url}/3/tv/on_the_air?language=en-US&page=1`, config).then((response) => {
+        await axios.get(`${url}/3/tv/on_the_air?language=en-US&page=1`, config).then((response) => {
             dispatch({ type: GET_LATEST_TVSHOWS, payload: response.data })
         })
 
     } catch (err) {
-       console.log(err)
+        console.log(err)
     }
 }
 
-export const getTvShows = (page,sort, genres, startDate, endDate, selectedLanguage) => async (dispatch) => {
+export const getTvShows = (page, allQueryParams) => async (dispatch) => {
     try {
+        const { sort, genres, startDate, endDate, selectedLanguage } = allQueryParams
         dispatch({ type: GET_TVSHOWS_REQUEST })
 
         let apiUrl = `${url}/3/discover/tv?include_adult=false&language=en-US&page=${page}`
@@ -32,9 +33,8 @@ export const getTvShows = (page,sort, genres, startDate, endDate, selectedLangua
             apiUrl += `&sort_by=${sort}`
         }
 
-        if (genres?.length > 0) {
-            const genreIds = genres.map((genre) => genre);
-            apiUrl += `&with_genres=${genreIds.join(',')}`;
+        if (genres !== undefined) {
+            apiUrl += `&with_genres=${genres}`;
         }
 
         if (startDate !== undefined) {
@@ -54,33 +54,35 @@ export const getTvShows = (page,sort, genres, startDate, endDate, selectedLangua
         })
 
     } catch (err) {
-        dispatch({ type: GET_TVSHOWS_FAIL, payload:err.response.data.message })
+        dispatch({ type: GET_TVSHOWS_FAIL, payload: err.response.data.message })
         console.log(err)
     }
 }
 
-export const getTvShowsGenres = () => async (dispatch) => {
+export const getTvShowsGenres = (setLoading) => async (dispatch) => {
     try {
-
-        await axios.get(`${url}/3/genre/movie/list?language=en`, config).then((response) => {
+         setLoading(true)
+        await axios.get(`${url}/3/genre/tv/list?language=en`, config).then((response) => {
+            setLoading(false)
             dispatch({ type: GET_TVSHOWS_GENRES, payload: response.data.genres })
         })
 
     } catch (err) {
+        setLoading(false)
         console.log(err)
     }
 }
 
-export const getTopRatedTvShows = (page)=> async(dispatch)=>{
+export const getTopRatedTvShows = (page) => async (dispatch) => {
     try {
-        dispatch({type:TOP_RATED_TVSHOWS_REQUEST})
+        dispatch({ type: TOP_RATED_TVSHOWS_REQUEST })
 
         await axios.get(`${url}/3/tv/top_rated?language=en-US&page=${page}`, config).then((response) => {
-           dispatch({type:TOP_RATED_TVSHOWS_SUCCESS,payload:response.data})
+            dispatch({ type: TOP_RATED_TVSHOWS_SUCCESS, payload: response.data })
         })
-        
+
     } catch (err) {
-        dispatch({type:TOP_RATED_TVSHOWS_FAIL,payload:err.response.data.message})
+        dispatch({ type: TOP_RATED_TVSHOWS_FAIL, payload: err.response.data.message })
     }
 }
 

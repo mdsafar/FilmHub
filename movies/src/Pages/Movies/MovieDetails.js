@@ -21,7 +21,7 @@ const conicColors = {
 
 const MovieDetails = () => {
     const dispatch = useDispatch()
-    const { movie, videos, similarMovies, loading, credits,images } = useSelector((state) => state.movieDetails)
+    const { movie, videos, similarMovies, loading, credits, images } = useSelector((state) => state.movieDetails)
     const navigate = useNavigate()
     const { id } = useParams();
 
@@ -37,7 +37,6 @@ const MovieDetails = () => {
         dispatch(getSimilarMovies(id))
     }, [dispatch, id])
 
-    console.log(credits);
 
     const movieTrailer = videos?.results?.find((video) => video.type === "Trailer" && video.official === true)
     const hours = Math.floor(movie?.runtime / 60);
@@ -126,10 +125,10 @@ const MovieDetails = () => {
                                     <p>{movie?.overview}</p>
                                 </div>
                                 <div className='d-flex mt-3'>
-                                {Director &&
-                                    <p className='mb-3 me-5 fw-bold' ><span className='d-block fw-light' >{Director?.job}</span>{Director?.name}</p>}
-                                {Writer &&
-                                    <p className='mb-3 me-5 fw-bold' ><span className='d-block fw-light' >{Writer?.job}</span>{Writer?.name}</p>}
+                                    {Director &&
+                                        <p className='mb-3 me-5 fw-bold' ><span className='d-block fw-light' >{Director?.job}</span>{Director?.name}</p>}
+                                    {Writer &&
+                                        <p className='mb-3 me-5 fw-bold' ><span className='d-block fw-light' >{Writer?.job}</span>{Writer?.name}</p>}
                                 </div>
                             </div>
                         </div>
@@ -154,7 +153,7 @@ const MovieDetails = () => {
                     </div>
                 </div>
                 <div className='media_section p-4 pb-2'>
-                   <Media videos={videos} images={images}/>
+                    <Media videos={videos} images={images} />
                 </div>
                 <Divider sx={{ backgroundColor: 'grey' }} />
                 {similarMovies?.results?.length !== 0 &&

@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Button, Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { Select } from 'antd'
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTvShows, getTvShowsGenres } from '../../actions/tvShowAction';
 import { getLanguages } from '../../actions/movieAction';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 
 
-const TvShowFilter = ({ currentPage }) => {
+const TvShowFilter = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { genres } = useSelector((state) => state.tvShows)
     const { languages } = useSelector((state) => state.movies)
+    const [queryParams] = useSearchParams()
+    const page = queryParams.get('page')
+    const allQueryParams = Object.fromEntries(queryParams)
     const [tvShowGenres, setTvShowGenres] = useState([])
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
     const [sort, setSort] = useState('')
     const [selectedLanguage, setSelectedLanguage] = useState('')
-
+    const [genresLoading,setGenresLoading] = useState(false)
+    const choosedGenres = queryParams.get('genres');
 
     useEffect(() => {
-        dispatch(getTvShows(currentPage,sort,tvShowGenres,startDate,endDate,selectedLanguage))
-        dispatch(getTvShowsGenres())
-       dispatch(getLanguages())
+        dispatch(getTvShows(page ?? 1, allQueryParams))
+        dispatch(getTvShowsGenres(setGenresLoading))
+        dispatch(getLanguages())
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch,currentPage])
+        if(choosedGenres){
+            setTvShowGenres(choosedGenres?.split(',').map(Number))
+        }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, page])
 
 
     const handleGenreChange = (e, genre) => {
@@ -70,6 +79,18 @@ const TvShowFilter = ({ currentPage }) => {
         value: data.iso_639_1,
         label: data.english_name
     })) || []
+
+
+    const removeEmptyFields = (obj) => {
+        return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== '' && value !== undefined));
+    };
+
+    const handleFilter = () => {
+        const filterData = { sort, genres: tvShowGenres.join(','), startDate, endDate, selectedLanguage }
+        const filteredData = removeEmptyFields(filterData)
+        navigate(`/tv-shows?${createSearchParams(filteredData)}`)
+        dispatch(getTvShows(1, filterData))
+    }
 
     return (
         <div className='filter_option w-100 mb-3'>
@@ -127,9 +148,17 @@ const TvShowFilter = ({ currentPage }) => {
                     <Typography variant='h6' className='mb-2 ml-1' fontSize={18}>
                         Genres
                     </Typography>
+                    {genresLoading ? (
+                        <>
+                            <Skeleton animation='wave' height={40} />
+                            <Skeleton animation='wave' height={40} />
+                        </>
+                    ) : (
                     <ToggleButtonGroup className='genre_btn_group flex-wrap' sx={{ gap: '14px' }}
                         value={tvShowGenres}
-                        onChange={handleGenreChange} defaultValue={'all'}>
+                        onChange={handleGenreChange}
+                        defaultValue={['all']}
+                    >
                         {genres?.map((data) => {
                             return <ToggleButton
                                 key={data.id}
@@ -140,9 +169,10 @@ const TvShowFilter = ({ currentPage }) => {
                                         borderColor: 'white !important',
                                     },
                                 }}
-                                variant="outlined">{data.name}</ToggleButton>
+                                variant="outlined">{genresLoading ? <Skeleton animation='wave' width={50} /> : data.name}</ToggleButton>
                         })}
                     </ToggleButtonGroup>
+                    )}
                 </div>
             </div>
             <div className='d-flex mt-1 justify-content-end me-2 filter_btn_div'>
@@ -160,7 +190,7 @@ const TvShowFilter = ({ currentPage }) => {
                         },
                     }}
                     className='filter_btn'
-                    onClick={() => dispatch(getTvShows(1,sort,tvShowGenres,startDate,endDate,selectedLanguage))}
+                    onClick={handleFilter}
                     variant="contained">Filter</Button>
             </div>
         </div>

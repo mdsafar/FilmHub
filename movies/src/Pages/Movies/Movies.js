@@ -1,29 +1,30 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Divider, Pagination } from '@mui/material'
 import { Spinner } from 'react-bootstrap'
 import './Movies.css'
-import { useNavigate } from 'react-router-dom'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import MovieFilter from './MovieFilter'
 import { useSelector } from 'react-redux'
 
 
 const Movies = () => {
     const navigate = useNavigate()
-    const { movies,loading } = useSelector((state) => state.movies)
-    const [currentPage, setCurrentPage] = useState(1)
+    const { movies, loading } = useSelector((state) => state.movies)
+    const [queryParams] = useSearchParams()
+    const allQueryParams = Object.fromEntries(queryParams)
 
 
     function changePage(e, value) {
-        setCurrentPage(value)
+        navigate(`/movies?${createSearchParams({ ...allQueryParams, page: value })}`)
     }
 
 
     return <>
         <section className='movies_section'>
-            <MovieFilter  currentPage={currentPage} />
+            <MovieFilter />
             <Divider sx={{ backgroundColor: "grey" }} />
             {loading ? (
-                <div style={{ height: "30vh", display: 'flex', justifyContent: "center", alignItems: "center" }}>
+                <div style={{ height: "35vh", display: 'flex', justifyContent: "center", alignItems: "center" }}>
                     <Spinner animation="border" variant="light" style={{ width: '45px', height: '45px' }} />
                 </div>
             ) : (

@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Button, Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { Select } from 'antd'
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 import { getLanguages, getMovies, getMoviesGenres } from '../../actions/movieAction';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 
 
-const MovieFilter = ({ currentPage }) => {
+const MovieFilter = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { genres, languages } = useSelector((state) => state.movies)
+    const [queryParams] = useSearchParams()
+    const allQueryParams = Object.fromEntries(queryParams)
     const [movieGenres, setMovieGenres] = useState([]);
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
     const [sort, setSort] = useState('popularity.desc')
     const [selectedLanguage, setSelectedLanguage] = useState('')
+    const page = queryParams.get('page')
+    const choosedGenres = queryParams.get('genres');
+    const [genresLoading, setGenresLoading] = useState(false)
 
 
     useEffect(() => {
-        dispatch(getMovies(currentPage,sort,movieGenres,startDate,endDate,selectedLanguage))
-        dispatch(getMoviesGenres())
+        dispatch(getMovies(page ?? 1, allQueryParams))
+        dispatch(getMoviesGenres(setGenresLoading))
         dispatch(getLanguages())
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[dispatch,currentPage])
+        if (choosedGenres) {
+            setMovieGenres(choosedGenres?.split(',').map(Number))
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, page])
 
 
     const handleGenreChange = (e, genre) => {
@@ -71,8 +82,19 @@ const MovieFilter = ({ currentPage }) => {
     })) || []
 
 
+    const removeEmptyFields = (obj) => {
+        return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== '' && value !== undefined));
+    };
 
-return (
+    const handleFilter = () => {
+        const filterData = { sort, genres: movieGenres.join(','), startDate, endDate, selectedLanguage }
+        const filteredData = removeEmptyFields(filterData)
+        navigate(`/movies?${createSearchParams(filteredData)}`)
+        dispatch(getMovies(1, filterData))
+    }
+
+
+    return (
         <div className='filter_option w-100 mb-3'>
             <Typography className='mb-3 ms-1' variant='h4' fontSize={20}>
                 Filter
@@ -93,19 +115,17 @@ return (
                         options={sortingArr}
                     />
                 </div>
-                <div className='d-flex gap-2 align-items-center filter_date_option'>
-                    <div className='filter_select_container'>
-                        <Typography variant='h6' fontSize={14} fontWeight={600}>
-                            Start Date :
-                        </Typography>
-                        <DatePicker className='date_picker' onChange={(e, d) => setStartDate(d)} />
-                    </div>
-                    <div className='filter_select_container'>
-                        <Typography variant='h6' fontSize={14} fontWeight={600}>
-                            End Date :
-                        </Typography>
-                        <DatePicker className='date_picker' onChange={(e, d) => setEndDate(d)} />
-                    </div>
+                <div className='filter_select_container'>
+                    <Typography variant='h6' fontSize={14} fontWeight={600}>
+                        Start Date :
+                    </Typography>
+                    <DatePicker className='date_picker' onChange={(e, d) => setStartDate(d)} />
+                </div>
+                <div className='filter_select_container'>
+                    <Typography variant='h6' fontSize={14} fontWeight={600}>
+                        End Date :
+                    </Typography>
+                    <DatePicker className='date_picker' onChange={(e, d) => setEndDate(d)} />
                 </div>
                 <div className='filter_select_container'>
                     <Typography variant='h6' fontSize={14} fontWeight={600}>
@@ -128,23 +148,31 @@ return (
                     <Typography variant='h6' className='mb-2 ml-1' fontSize={18}>
                         Genres
                     </Typography>
-                    <ToggleButtonGroup className='genre_btn_group flex-wrap' sx={{ gap: '14px' }}
-                        value={movieGenres}
-                        onChange={handleGenreChange}
-                    >
-                        {genres?.map((data) => {
-                            return <ToggleButton
-                                key={data.id}
-                                value={data.id}
-                                className='genres_btn'
-                                sx={{
-                                    '&:hover': {
-                                        borderColor: 'white !important',
-                                    },
-                                }}
-                                variant="outlined">{data.name}</ToggleButton>
-                        })}
-                    </ToggleButtonGroup>
+                    {genresLoading ? (
+                        <>
+                            <Skeleton animation='wave' height={40} />
+                            <Skeleton animation='wave' height={40} />
+                        </>
+                    ) : (
+                        <ToggleButtonGroup className='genre_btn_group flex-wrap' sx={{ gap: '14px' }}
+                            value={movieGenres}
+                            onChange={handleGenreChange}
+                        >
+                            {genres?.map((data) => {
+                                return <ToggleButton
+                                    key={data.id}
+                                    value={data.id}
+                                    className='genres_btn'
+                                    sx={{
+                                        '&:hover': {
+                                            borderColor: 'white !important',
+                                        },
+                                    }}
+                                    variant="outlined">{genresLoading ? <Skeleton animation='wave' width={50} /> : data.name}</ToggleButton>
+                            })}
+                        </ToggleButtonGroup>
+                    )}
+
                 </div>
             </div>
             <div className='d-flex mt-1 justify-content-end me-2 filter_btn_div'>
@@ -162,7 +190,7 @@ return (
                         },
                     }}
                     className='filter_btn'
-                    onClick={() => dispatch(getMovies(1, sort, movieGenres, startDate, endDate, selectedLanguage))}
+                    onClick={handleFilter}
                     variant="contained">Filter</Button>
             </div>
         </div>

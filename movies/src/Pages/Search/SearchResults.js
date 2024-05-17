@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect} from 'react'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Divider, Pagination, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux'
 import { searchData } from '../../actions/movieAction'
@@ -10,16 +10,17 @@ const SearchResults = () => {
     const dispatch = useDispatch()
     const { data, loading } = useSelector((state) => state.search)
     const navigate = useNavigate()
-    const [searchParams] = useSearchParams();
-    const keyword = searchParams.get('keyword');
-    const [currentPage, setCurrentPage] = useState(1)
+    const [queryParams] = useSearchParams();
+    const keyword = queryParams.get('keyword');
+    const page = queryParams.get('page')
+    const allQueryParams = Object.fromEntries(queryParams)
 
 
     useEffect(() => {
         if (keyword) {
-            dispatch(searchData(keyword, currentPage))
+            dispatch(searchData(keyword, page))
         }
-    }, [dispatch, keyword, currentPage])
+    }, [dispatch, keyword, page])
 
 
     function handleNavigate(type, id) {
@@ -32,7 +33,7 @@ const SearchResults = () => {
     }
 
     function changePage(e, value) {
-        setCurrentPage(value)
+        navigate(`/search?${createSearchParams({ ...allQueryParams, page: value })}`)
     }
 
 

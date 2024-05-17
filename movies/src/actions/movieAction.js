@@ -49,8 +49,9 @@ export const searchData = (word, page) => async (dispatch) => {
     }
 }
 
-export const getMovies = (page, sort, genres, startDate, endDate, selectedLanguage) => async (dispatch) => {
+export const getMovies = (page, allQueryParams) => async (dispatch) => {
     try {
+        const { sort, genres, startDate, endDate, selectedLanguage } = allQueryParams
         dispatch({ type: GET_MOVIES_REQUEST })
 
         let apiUrl = `${url}/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}`
@@ -59,9 +60,8 @@ export const getMovies = (page, sort, genres, startDate, endDate, selectedLangua
             apiUrl += `&sort_by=${sort}`
         }
 
-        if (genres?.length > 0) {
-            const genreIds = genres.map((genre) => genre);
-            apiUrl += `&with_genres=${genreIds.join(',')}`;
+        if (genres !== undefined) {
+            apiUrl += `&with_genres=${genres}`;
         }
 
         if (startDate !== undefined) {
@@ -87,15 +87,17 @@ export const getMovies = (page, sort, genres, startDate, endDate, selectedLangua
     }
 }
 
-export const getMoviesGenres = () => async (dispatch) => {
+export const getMoviesGenres = (setLoading) => async (dispatch) => {
     try {
-
+         setLoading(true)
         await axios.get(`${url}/3/genre/movie/list?language=en`, config).then((response) => {
+            setLoading(false)
             dispatch({ type: GET_MOVIES_GENRES, payload: response.data.genres })
         })
 
     } catch (err) {
         console.log(err)
+        setLoading(false)
     }
 }
 
